@@ -39,6 +39,17 @@
       <a {% if endpoint == request.endpoint %} class="active item" {% else %} class="item" {% endif %}
         href="{{ url_for(endpoint) }}">{{ caption }}</a>
       {%- endfor %}
+      {% if cluster_names %}
+      <div class="ui dropdown item">
+        Clusters
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          {% for cluster in cluster_names %}
+            <a class="{% if env == current_env %}active {% endif %}item" href="{{url_for_cluster(cluster)}}">{{cluster}}</a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
       <div class="item" style="float:right"><a href="https://github.com/puppet-community/puppetboard" target="_blank">v0.0.5</a></div>
     </nav>
     <div class="ui grid padding-bottom">
@@ -52,12 +63,6 @@
     <div id="scroll-btn-top">
       <i class="large arrow up icon"></i>
     </div>
-
-    <footer class="ui absolute fixed bottom">
-      <div>
-	Copyright &copy; 2013-{{ now('%Y') }} <a href="https://github.com/daenney" target="_blank">Daniele Sluijters</a>. <span style="float:right">Live from PuppetDB.</span>
-      </div>
-    </footer>
 
     {% if config.OFFLINE_MODE %}
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
@@ -80,6 +85,10 @@
     <script src="{{ url_for('static', filename='js/lists.js') }}"></script>
     <script src="{{ url_for('static', filename='js/tables.js') }}"></script>
     <script src="{{ url_for('static', filename='js/scroll.top.js') }}"></script>
+    <script type="text/javascript">
+      $(".ui.dropdown").dropdown();
+      $('table').tablesort();
+    </script>
 
     {% block script %} {% endblock script %}
   </body>

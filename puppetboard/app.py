@@ -36,6 +36,13 @@ app.secret_key = app.config['SECRET_KEY']
 
 app.jinja_env.filters['jsonprint'] = jsonprint
 
+# Get Cluster names and respective URLs
+clusters = app.config['CLUSTERS']
+if not isinstance(clusters, dict):
+    raise ValueError('Invalid clusters value: %s. Must be of type dict' % clusters)
+cluster_names = clusters.keys()
+app.jinja_env.globals['cluster_names'] = cluster_names
+
 puppetdb = connect(
     api_version=3,
     host=app.config['PUPPETDB_HOST'],
@@ -58,6 +65,11 @@ def stream_template(template_name, **context):
     rv = t.stream(context)
     rv.enable_buffering(5)
     return rv
+
+def url_for_cluster(cluster_name):
+    return clusters[cluster_name]
+
+app.jinja_env.globals['url_for_cluster'] = url_for_cluster
 
 
 @app.context_processor
