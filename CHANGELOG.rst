@@ -4,6 +4,13 @@ Changelog
 
 This is the changelog for Puppetboard.
 
+0.0.6
+=====
+
+* Adds a clusters dropdown menu if multiple clusters are specified in the
+  settings file. This is useful if you have multiple clusters with multiple
+  PuppetBoards and want to quickly jump between them.
+
 0.0.5
 =====
 
