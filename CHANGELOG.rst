@@ -4,6 +4,11 @@ Changelog
 
 This is the changelog for Puppetboard.
 
+0.0.7
+=====
+
+* Updates PuppetDB API to v4.
+
 0.0.6
 =====
 

@@ -44,7 +44,7 @@ cluster_names = clusters.keys()
 app.jinja_env.globals['cluster_names'] = cluster_names
 
 puppetdb = connect(
-    api_version=3,
+    api_version=4,
     host=app.config['PUPPETDB_HOST'],
     port=app.config['PUPPETDB_PORT'],
     ssl_verify=app.config['PUPPETDB_SSL_VERIFY'],
