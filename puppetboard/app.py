@@ -323,8 +323,9 @@ def report(node_name, report_id):
 
     for report in reports:
         if report.hash_ == report_id or report.version == report_id:
+            print 'AQUI %s' % node_name
             events = puppetdb.events('["=", "report", "{0}"]'.format(
-                report.hash_))
+                report.hash_), node_name=node_name)
             return render_template(
                 'report.html',
                 report=report,
