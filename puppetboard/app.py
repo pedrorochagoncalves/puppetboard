@@ -299,9 +299,14 @@ def report_latest(node_name):
     as long as PuppetDB can't filter reports for latest-report? field. This
     feature has been requested: https://tickets.puppetlabs.com/browse/PDB-203
     """
+    # This is a hacky thing because v4 API returns the reports out of order
+    # I should create another method in puppetdb api to return the query instead
+    # of the generator that puppetdb.reports() returns
+    order = '[{"field": "receive-time", "order": "desc"}, \
+            {"field": "receive-time"}]'
     reports = get_or_abort(puppetdb._query, 'reports',
                            query='["=","certname","{0}"]'.format(node_name),
-                           limit=1)
+                           limit=1, order_by=order)
     if len(reports) > 0:
         report = reports[0]['hash']
         return redirect(
@@ -323,7 +328,6 @@ def report(node_name, report_id):
 
     for report in reports:
         if report.hash_ == report_id or report.version == report_id:
-            print 'AQUI %s' % node_name
             events = puppetdb.events('["=", "report", "{0}"]'.format(
                 report.hash_), node_name=node_name)
             return render_template(

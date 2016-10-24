@@ -4,6 +4,15 @@ Changelog
 
 This is the changelog for Puppetboard.
 
+0.0.7.1
+=======
+
+* Small bug fix on the latest report endpoint. The reports returned by the v4
+  reports API are not ordered, so they needed to be ordered to have the most
+  recent one first.
+* Also updates the CSS for the dropdown menu. Hovering over an item highlights
+  it now.
+
 0.0.7
 =====
 
